@@ -38,6 +38,9 @@ name: 'main',
 </script>
 <style lang='scss' scoped>
 .main{
-    height: 100%;
+  height: 100%;
+  .el-header{
+    padding: 0;
+  }
 }
 </style>

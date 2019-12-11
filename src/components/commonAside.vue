@@ -6,7 +6,7 @@
       background-color="#33aef0"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item :index="item.path" v-for="(item, index) in noChildren" :key="index">
+      <el-menu-item :index="item.path" @click="clickMenu(item)" v-for="(item, index) in noChildren" :key="index">
         <i :class="'el-icon-'+item.icon"></i>
         <span slot="title">{{item.label}}</span>
       </el-menu-item>
@@ -16,7 +16,7 @@
           <span slot="title">{{item.label}}</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item :index="subItem.path" v-for="(subItem,subIndex) in item.children" :key="subIndex">
+          <el-menu-item :index="subItem.path" v-for="(subItem,subIndex) in item.children" @click="clickMenu(subItem)" :key="subIndex">
             <i :class="'el-icon-' + subItem.icon"></i>
             <span slot="title">{{ subItem.label }}</span>
           </el-menu-item>
@@ -35,17 +35,20 @@ name: 'commonAside',
             {
                 path: "/",
                 label: "首页",
+                name: "home",
                 icon: "s-home"
             },
             {
                 path: "/video",
                 label: "视频管理",
+                name: "video",
                 icon: "video-play"
             },
             {
                 path: "/user",
                 label: "用户管理",
-                icon: "user"
+                icon: "user",
+                name: "user"
             },
             {
                 path: "/",
@@ -54,12 +57,14 @@ name: 'commonAside',
                     {
                         path: "/page1",
                         label: "页面1",
-                        icon: "setting"
+                        icon: "setting",
+                        name: "page1"
                     },
                     {   
                         path: "/page2",
                         label: "页面2",
-                        icon: "document"
+                        icon: "document",
+                        name: "page2"
                     }
                 ]
             }
@@ -79,7 +84,11 @@ name: 'commonAside',
 
   mounted() {},
 
-  methods: {},
+  methods: {
+    clickMenu(val){
+      this.$store.commit("selectMenu", val)
+    }
+  },
 }
 
 </script>
@@ -89,5 +98,6 @@ name: 'commonAside',
 }
 .el-menu{
     height: 100%;
+    border: none;
 }
 </style>
