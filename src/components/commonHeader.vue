@@ -1,7 +1,7 @@
 <template>
   <div class='commonHeader'>
     <div class="l_con">
-      <el-button type="primary" icon="el-icon-menu" size="mini"></el-button>
+      <el-button plain type="primary" icon="el-icon-menu" size="mini" @click="collapseMenu"></el-button>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="current.path" v-if="current">
@@ -35,7 +35,7 @@ name: 'commonHeader',
 
   computed: {
     ...mapState({
-      current: state => state.tab.currentMenu      
+      current: state => state.tab.currentMenu
     })
   },
   created() {},
@@ -43,7 +43,9 @@ name: 'commonHeader',
   mounted() {},
 
   methods: {
-    
+    collapseMenu(){
+      this.$store.commit("collapseMenu")
+    }
   },
 }
 
@@ -79,7 +81,7 @@ name: 'commonHeader',
 <style lang="scss">
 .el-breadcrumb__item{
   .el-breadcrumb__inner{
-    color: #ffffff;
+    color: #666666;
   }
   &:last-child{
     .el-breadcrumb__inner{

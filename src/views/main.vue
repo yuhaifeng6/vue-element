@@ -1,14 +1,18 @@
 <template>
   <div class='main'>
     <el-container style="height: 100%;">
-        <el-aside width="200px">
+      <!-- 侧边栏 -->
+        <el-aside width="auto">
             <commonAside></commonAside>
         </el-aside>
         <el-container>
             <el-header>
                 <commonHeader></commonHeader>
             </el-header>
-            <el-main>Main</el-main>
+            <commonTab></commonTab>
+            <el-main>
+              <router-view></router-view>
+            </el-main>
         </el-container>
     </el-container>
   </div>
@@ -17,6 +21,7 @@
 <script>
 import commonHeader from '../components/commonHeader'
 import commonAside from '../components/commonAside'
+import commonTab from '../components/commonTab'
 export default {
 name: 'main',
   data(){
@@ -25,7 +30,8 @@ name: 'main',
   },
   components: {
       commonHeader,
-      commonAside
+      commonAside,
+      commonTab
   },
 
   created() {},

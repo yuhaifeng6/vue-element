@@ -3,8 +3,9 @@
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
-      background-color="#33aef0"
+      background-color="#545c64"
       text-color="#fff"
+      :collapse="isClollapse"
       active-text-color="#ffd04b">
       <el-menu-item :index="item.path" @click="clickMenu(item)" v-for="(item, index) in noChildren" :key="index">
         <i :class="'el-icon-'+item.icon"></i>
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
 name: 'commonAside',
   data(){
@@ -73,12 +75,15 @@ name: 'commonAside',
   },
 
     computed: {
-        noChildren() {
-            return this.asideMenu.filter(item => !item.children)
-        },
-        hasChildren(){
-            return this.asideMenu.filter(item => item.children)
-        }
+      noChildren() {
+        return this.asideMenu.filter(item => !item.children)
+      },
+      hasChildren(){
+        return this.asideMenu.filter(item => item.children)
+      },
+      isClollapse(){
+        return this.$store.state.tab.isClollapse
+      }
     },
   created() {},
 
@@ -86,6 +91,7 @@ name: 'commonAside',
 
   methods: {
     clickMenu(val){
+      this.$router.push({name: val.name})
       this.$store.commit("selectMenu", val)
     }
   },
@@ -99,5 +105,9 @@ name: 'commonAside',
 .el-menu{
     height: 100%;
     border: none;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>
