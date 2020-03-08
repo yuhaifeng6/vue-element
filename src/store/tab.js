@@ -1,3 +1,4 @@
+import Cookie from "js-cookie"
 export default {
     state: {
         menu: [],
@@ -13,7 +14,47 @@ export default {
         ]
     },
     mutations: {
+        setMenu(state, val){
+            state.menu = val
+            Cookie.set("menu", JSON.stringify(val))
+        },
+        clearMenu(state){
+            state.menu = []
+            Cookie.remove("menu")
+        },
+        addMenu(state, router){
+            let menu = JSON.parse(Cookie.get("menu"))
+            if(!menu){
+                return
+            }
+            state.menu = menu
+            let currentMenu = [
+                {
+                    path: "/",
+                    component: () => import(`@/views/vMain`),
+                    children: []
+                }
+            ]
+            // 循环添加路由，判断后端返回的路由是否有children路由
+            menu.forEach(item => {
+                console.log("遍历", item);
+                if(item.children) {
+                    item.children = item.children.map(val => {
+                        val.component = () => import(`@/views/${val.url}`)
+                        return val
+                    })
+                    currentMenu[0].children.push(...item.children)
+                } else {
+                    item.component = () => import(`@/views/${item.url}`)
+                    currentMenu[0].children.push(item)
+                }
+            })
+            // console.log("结果", currentMenu);
+            // state.menu = currentMenu[0].children
+            router.addRoutes(currentMenu)
+        },
         selectMenu(state, val){
+            console.log("点击", val);
             if(val.name !== "home"){
                 state.currentMenu = val
                 // 判断tabsList中是否有重复的

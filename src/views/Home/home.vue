@@ -33,20 +33,20 @@
         </el-card>
       </div>
       <el-card shadow="hover">
-        <div style="height: 280px">
+        <echarts style="height: 280px" :chartData="echartData.order">
 
-        </div>
+        </echarts>
       </el-card>
       <div class="graph">
         <el-card shadow="hover">
-          <div style="height: 260px">
+          <echarts style="height: 260px" :chartData="echartData.user">
 
-          </div>
+          </echarts>
         </el-card>
         <el-card shadow="hover">
-          <div style="height: 260px">
+          <echarts style="height: 260px" :chartData="echartData.video">
 
-          </div>
+          </echarts>
         </el-card>
       </div>
     </el-col>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import echarts from "../../components/echarts";
 export default {
 name: 'home',
   data(){
@@ -103,10 +104,25 @@ name: 'home',
         todayBuy: "今日购买",
         monthBuy: "本月购买",
         totalBuy: "总购买"
+      },
+      echartData: {
+        order: {
+          xData: [],
+          series: []
+        },
+        user: {
+          xData: [],
+          series: []
+        },
+        video: {
+          series: []
+        }
       }
     };
   },
-
+  components: {
+    echarts,
+  },
   created() {
     this.getTableData()
   },
@@ -119,6 +135,36 @@ name: 'home',
       this.$http.get("/home/getData")
       .then(res=>{
         this.tableData = res.data.data.tableData
+        const order = res.data.data.orderData // 订单折线图
+        const user = res.data.data.userData
+        this.echartData.order.xData = order.date
+        let keyArr = Object.keys(order.data[0]) // 取出order.data中的键名
+        // 遍历数组拼成echarts规定的对象
+        keyArr.forEach(key => {
+          this.echartData.order.series.push({
+            name: key,
+            type: "line",
+            data: order.data.map(val => val[key])
+          })
+        })
+        // 用户图表
+        this.echartData.user.xData = user.map(item => item.date)
+        this.echartData.user.series.push({
+          name: "新增用户",
+          data: user.map(item => item.new),
+          type: "bar"
+        })
+        this.echartData.user.series.push({
+          name: '活跃用户',
+          data: user.map(item => item.active),
+          type: 'bar',
+          barGap: 0
+        })
+        // 视频饼图
+        this.echartData.video.series.push({
+          data: res.data.data.videoData,
+          type: 'pie'
+        })
       })
       .catch(err=>{
         console.log(err)

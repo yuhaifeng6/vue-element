@@ -7,6 +7,8 @@
       text-color="#fff"
       :collapse="isClollapse"
       active-text-color="#ffd04b">
+      <h3 v-show="!isClollapse">于叔后台管理系统</h3>
+      <h3 v-show="isClollapse">于叔</h3>
       <el-menu-item :index="item.path" @click="clickMenu(item)" v-for="(item, index) in noChildren" :key="index">
         <i :class="'el-icon-'+item.icon"></i>
         <span slot="title">{{item.label}}</span>
@@ -33,61 +35,28 @@ export default {
 name: 'commonAside',
   data(){
     return {
-        asideMenu: [
-            {
-                path: "/",
-                label: "首页",
-                name: "home",
-                icon: "s-home"
-            },
-            {
-                path: "/video",
-                label: "视频管理",
-                name: "video",
-                icon: "video-play"
-            },
-            {
-                path: "/user",
-                label: "用户管理",
-                icon: "user",
-                name: "user"
-            },
-            {
-                path: "/",
-                label: "其他",
-                children: [
-                    {
-                        path: "/page1",
-                        label: "页面1",
-                        icon: "setting",
-                        name: "page1"
-                    },
-                    {   
-                        path: "/page2",
-                        label: "页面2",
-                        icon: "document",
-                        name: "page2"
-                    }
-                ]
-            }
-        ]
     };
   },
 
     computed: {
       noChildren() {
-        return this.asideMenu.filter(item => !item.children)
+        return this.menu.filter(item => !item.children)
       },
       hasChildren(){
-        return this.asideMenu.filter(item => item.children)
+        return this.menu.filter(item => item.children)
       },
       isClollapse(){
         return this.$store.state.tab.isClollapse
+      },
+      menu() {
+        return this.$store.state.tab.menu
       }
     },
   created() {},
 
-  mounted() {},
+  mounted() {
+    // console.log('侧边栏输出', this.$store.state.tab.menu);
+  },
 
   methods: {
     clickMenu(val){
@@ -105,6 +74,11 @@ name: 'commonAside',
 .el-menu{
     height: 100%;
     border: none;
+    h3{
+      color: #ffffff;
+      text-align: center;
+      line-height: 60px;
+    }
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;

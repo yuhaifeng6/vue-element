@@ -1,5 +1,5 @@
 <template>
-  <div class='main'>
+  <div class='v-main'>
     <el-container style="height: 100%;">
       <!-- 侧边栏 -->
         <el-aside width="auto">
@@ -43,7 +43,7 @@ name: 'main',
 
 </script>
 <style lang='scss' scoped>
-.main{
+.v-main{
   height: 100%;
   .el-header{
     padding: 0;
