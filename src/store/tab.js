@@ -36,8 +36,8 @@ export default {
                 }
             ]
             // 循环添加路由，判断后端返回的路由是否有children路由
+            // 做成路由需要的格式，将url作为component属性
             menu.forEach(item => {
-                console.log("遍历", item);
                 if(item.children) {
                     item.children = item.children.map(val => {
                         val.component = () => import(`@/views/${val.url}`)
@@ -49,12 +49,9 @@ export default {
                     currentMenu[0].children.push(item)
                 }
             })
-            // console.log("结果", currentMenu);
-            // state.menu = currentMenu[0].children
             router.addRoutes(currentMenu)
         },
         selectMenu(state, val){
-            console.log("点击", val);
             if(val.name !== "home"){
                 state.currentMenu = val
                 // 判断tabsList中是否有重复的

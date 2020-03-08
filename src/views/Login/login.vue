@@ -29,7 +29,6 @@ export default {
       this.$http.post('/api/permission/getMenu', this.form).then(res => {
         res = res.data
         if (res.code === 20000) {
-          console.log("接口返回", res.data.menu);
           this.$store.commit('clearMenu')
           this.$store.commit('setMenu', res.data.menu)
           this.$store.commit('setToken', res.data.token)
