@@ -16,7 +16,7 @@
         </span>
         <el-dropdown-menu slot="dropdown" size="mini">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -45,6 +45,11 @@ name: 'commonHeader',
   methods: {
     collapseMenu(){
       this.$store.commit("collapseMenu")
+    },
+    logout() {
+      this.$store.commit("clearToken");
+      this.$store.commit("clearMenu");
+      location.reload();
     }
   },
 }
