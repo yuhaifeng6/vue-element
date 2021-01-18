@@ -60,7 +60,7 @@ name: 'commonHeader',
   display: flex;
   align-items: center;
   height: 100%;
-  background: #000000;
+  background: #545c64;
   padding: 0 20px;
   color: #ffffff;
   justify-content: space-between;

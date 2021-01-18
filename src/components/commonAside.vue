@@ -3,7 +3,7 @@
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
-      background-color="#545c64"
+      background-color="#333333"
       text-color="#fff"
       :collapse="isClollapse"
       active-text-color="#ffd04b">
