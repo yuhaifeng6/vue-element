@@ -23,7 +23,7 @@ import commonHeader from '../components/commonHeader'
 import commonAside from '../components/commonAside'
 import commonTab from '../components/commonTab'
 export default {
-name: 'main',
+name: 'vmain',
   data(){
     return {
     };
