@@ -7,7 +7,7 @@ import store from './store'
 import "./assets/scss/reset.scss"
 import 'element-ui/lib/theme-chalk/index.css';
 import http from "@/api/config"
-import './mock'
+// import './mock'
 
 // 引入第三方包
 import ElementUI from 'element-ui';

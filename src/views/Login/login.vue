@@ -26,17 +26,18 @@ export default {
   },
   methods: {
     login() {
-      this.$http.post('/api/permission/getMenu', this.form).then(res => {
-        res = res.data
-        if (res.code === 20000) {
-          this.$store.commit('clearMenu')
-          this.$store.commit('setMenu', res.data.menu)
-          this.$store.commit('setToken', res.data.token)
-          this.$store.commit('addMenu', this.$router)
-          this.$router.push({ name: 'home' })
-        } else {
-          this.$message.warning(res.data.message)
-        }
+      this.$http.post('/api/login', this.form).then(res => {
+        console.log('返回', res)
+        // res = res.data
+        // if (res.code === 20000) {
+        //   this.$store.commit('clearMenu')
+        //   this.$store.commit('setMenu', res.data.menu)
+        //   this.$store.commit('setToken', res.data.token)
+        //   this.$store.commit('addMenu', this.$router)
+        //   this.$router.push({ name: 'home' })
+        // } else {
+        //   this.$message.warning(res.data.message)
+        // }
       })
     }
   }

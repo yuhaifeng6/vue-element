@@ -7,6 +7,15 @@ module.exports = {
     devServer: {
         port: 3322,
         open: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3004',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
+        }
     },
 
     productionSourceMap: false, // 生产环境不生成map文件
