@@ -6,14 +6,14 @@ import store from './store'
 // 全局配置
 import "./assets/scss/reset.scss"
 import 'element-ui/lib/theme-chalk/index.css';
-import http from "@/api/config"
+import * as api from './api/api'
 // import './mock'
 
 // 引入第三方包
 import ElementUI from 'element-ui';
 
 Vue.use(ElementUI)
-Vue.prototype.$http = http
+Vue.prototype.api = api
 
 Vue.config.productionTip = false
 

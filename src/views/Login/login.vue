@@ -5,7 +5,7 @@
         <el-input v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="form.password" type="password"></el-input>
+        <el-input v-model="form.userpwd" type="password"></el-input>
       </el-form-item>
       <el-form-item align="center">
         <el-button type="primary" @click="login">登录</el-button>
@@ -20,14 +20,34 @@ export default {
     return {
       form: {
         username: '',
-        password: ''
+        userpwd: ''
       }
     }
   },
   methods: {
     login() {
-      this.$http.post('/api/login', this.form).then(res => {
+      if (!this.form.username || !this.form.userpwd) {
+        this.$message({
+          message: '请输入用户名和密码！',
+          type: 'warning'
+        })
+        return
+      }
+      this.api.postAPI('/api/login', this.form).then(res => {
         console.log('返回', res)
+        let code = res.data.code
+        let msg = res.data.msg
+        if (code < 0) {
+          this.$message({
+            type: 'warning',
+            message: msg
+          })
+        } else {
+          this.$message({
+            type: 'success',
+            message: msg
+          })
+        }
         // res = res.data
         // if (res.code === 20000) {
         //   this.$store.commit('clearMenu')
