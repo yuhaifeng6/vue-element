@@ -47,6 +47,7 @@ export default {
             type: 'success',
             message: msg
           })
+          this.$store.commit('setToken', res.data.token)
         }
         // res = res.data
         // if (res.code === 20000) {

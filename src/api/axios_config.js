@@ -1,4 +1,5 @@
 import axios from "axios"
+import store from '../store/index'
 
 // 创建一个axios实例
 const service = axios.create({
@@ -6,8 +7,15 @@ const service = axios.create({
 });
 
 // 添加请求拦截器
-service.interceptors.request.use(
-    config => {
+service.interceptors.request.use(config => {
+        // 发请求前，将token携带到headers上
+        store.commit('getToken')
+        const token = store.state.user.token
+        if (token) {
+            config.headers = {
+                'Authorization': token
+            }
+        }
         return config
     },
     err => {
