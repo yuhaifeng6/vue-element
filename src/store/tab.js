@@ -16,16 +16,16 @@ export default {
         ]
     },
     mutations: {
-        setMenu(state, val){
+        setMenu(state, val) {
             state.menu = val
-            Cookie.set("menu", JSON.stringify(val))
+            Cookie.set("menu", val)
         },
         clearMenu(state){
             state.menu = []
             Cookie.remove("menu")
-        },
-        addMenu(state, routers){
-            if(!Cookie.get("menu")){
+        }, 
+        addMenu(state, routers) {
+            if (!Cookie.get("menu")) {
                 return
             }
             let menu = JSON.parse(Cookie.get("menu"))
@@ -53,8 +53,8 @@ export default {
             })
             routers.addRoutes(currentMenu)
         },
-        selectMenu(state, val){
-            if(val.name !== "home"){
+        selectMenu(state, val) {
+            if (val.name !== "home") {
                 state.currentMenu = val
                 // 判断tabsList中是否有重复的
                 let result = state.tabsList.findIndex(item => item.name === val.name)
@@ -64,11 +64,13 @@ export default {
             }
         },
         closeTab(state, val) {
+            console.log('输出', state.currentMenu)
             // 关闭的时候  找到这个数组的下标值  将其删除掉 并且跳转到相应页面
             let result = state.tabsList.findIndex(item => item.name === val.name)
             state.tabsList.splice(result, 1)
             let last = state.tabsList.slice(state.tabsList.length - 1, state.tabsList.length)
             router.replace({name: last[0].name})
+            state.currentMenu = last[0]
         },
         collapseMenu(state){
             state.isClollapse = !state.isClollapse
