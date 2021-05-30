@@ -3,10 +3,10 @@
     <el-col :span="8">
       <el-card shadow="hover" style="height: 290px;">
         <div class="user">
-          <img :src="userImg" />
+          <img :src="'/static/img/'+userinfo.avatar+'.png'" />
           <div class="userinfo">
-            <p class="name">Nick</p>
-            <p class="access">超级管理员</p>
+            <p class="name">{{userinfo.username}}</p>
+            <p class="access">{{userinfo.identifyname}}</p>
           </div>
         </div>
         <div class="login-info">
@@ -55,11 +55,11 @@
 
 <script>
 import echarts from "../../components/echarts";
+
 export default {
 name: 'home',
   data(){
     return {
-      userImg: require("../../assets/img/user.png"),
       countData: [
         {
           name: '今日支付订单',
@@ -122,6 +122,11 @@ name: 'home',
   },
   components: {
     echarts,
+  },
+  computed: {
+    userinfo () {
+      return JSON.parse(this.$store.state.user.userinfo)
+    }
   },
   created() {
     this.getTableData()

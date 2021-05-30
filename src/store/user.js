@@ -1,7 +1,9 @@
 import Cookie from 'js-cookie'
+
 export default {
   state: {
-    token: ''
+    token: '',
+    userinfo: Cookie.get('userinfo') || ''
   },
   mutations: {
     setToken(state, val) {
@@ -14,6 +16,15 @@ export default {
     },
     getToken(state) {
       state.token = Cookie.get('token')
+    },
+    setUserInfo (state, info) {
+      let infojson = JSON.stringify(info)
+      state.userinfo = infojson
+      Cookie.set('userinfo', infojson)
+    },
+    clearUserInfo (state) {
+      state.userinfo = ''
+      Cookie.remove('userinfo')
     }
   },
   actions: {}

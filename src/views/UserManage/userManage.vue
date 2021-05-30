@@ -26,6 +26,7 @@ export default {
 name: 'userManage',
   data(){
     return {
+      uid: JSON.parse(this.$store.state.user.userinfo).uid,
       operateType: 'add',
       isShow: false,
       tableData: [],
@@ -125,25 +126,28 @@ name: 'userManage',
 
   methods: {
     getList(name = '') {
-      this.config.loading = true
+      // this.config.loading = true
       // 搜索时，页码需要设置为1，才能正确返回数据，因为数据是从第一页开始返回的
       name ? (this.config.page = 1) : ''
-      this.$http
-        .get('/api/user/getUser', {
-          params: {
-            page: this.config.page,
-            name
-          }
-        })
-        .then(res => {
-          console.log("返回的数组", res.data.list)
-          this.tableData = res.data.list.map(item => {
-            item.sexLabel = item.sex === 0 ? '女' : '男'
-            return item
+      this.api.postAPI('/api/getUser', {
+        uid: this.uid
+      })
+      .then(res => {
+        let data = res.data
+        if (code < 0) {
+          this.$message({
+            message: data.msg,
+            type: 'warning'
           })
-          this.config.total = res.data.count
-          this.config.loading = false
-        })
+        }
+        console.log("返回的数组", res.data.list)
+        // this.tableData = res.data.list.map(item => {
+        //   item.sexLabel = item.sex === 0 ? '女' : '男'
+        //   return item
+        // })
+        // this.config.total = res.data.count
+        // this.config.loading = false
+      })
     },
     addUser() {
       this.operateForm = {}

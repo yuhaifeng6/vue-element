@@ -7,13 +7,13 @@
       text-color="#fff"
       :collapse="isClollapse"
       active-text-color="#ffd04b">
-      <h3 v-show="!isClollapse">于叔后台管理系统</h3>
-      <h3 v-show="isClollapse">于叔</h3>
+      <h3 v-show="!isClollapse">{{userinfo.username}}后台管理系统</h3>
+      <h3 v-show="isClollapse">{{userinfo.username}}</h3>
       <el-menu-item :index="item.path" @click="clickMenu(item)" v-for="(item, index) in noChildren" :key="index">
         <i :class="'el-icon-'+item.icon"></i>
         <span slot="title">{{item.label}}</span>
       </el-menu-item>
-      <el-submenu :index="item.label" v-for="(item, index) in hasChildren" :key="item.label">
+      <el-submenu :index="item.label" v-for="item in hasChildren" :key="item.label">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">{{item.label}}</span>
@@ -50,12 +50,14 @@ name: 'commonAside',
       },
       menu() {
         return this.$store.state.tab.menu
+      },
+      userinfo () {
+        return JSON.parse(this.$store.state.user.userinfo)
       }
     },
   created() {},
 
   mounted() {
-    // console.log('侧边栏输出', this.$store.state.tab.menu);
   },
 
   methods: {

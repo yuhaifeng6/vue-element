@@ -35,8 +35,10 @@ export default {
       }
       this.api.postAPI('/api/login', this.form).then(res => {
         console.log('返回', res)
-        let code = res.data.code
-        let msg = res.data.msg
+        let data = res.data
+        let code = data.code
+        let msg = data.msg
+        let userinfo = {uid: data.uid, username: data.username, avatar: data.avatar, identifyname: data.identifyname}
         if (code < 0) {
           this.$message({
             type: 'warning',
@@ -48,8 +50,9 @@ export default {
             message: msg
           })
           this.$store.commit('clearMenu')
-          this.$store.commit('setMenu', res.data.routecon)
-          this.$store.commit('setToken', res.data.token)
+          this.$store.commit('setMenu', data.routecon)
+          this.$store.commit('setUserInfo', userinfo)
+          this.$store.commit('setToken', data.token)
           this.$store.commit('addMenu', this.$router)
           this.$router.push({ name: 'home' })
         }

@@ -20,7 +20,7 @@ export default {
             state.menu = val
             Cookie.set("menu", val)
         },
-        clearMenu(state){
+        clearMenu(state) {
             state.menu = []
             Cookie.remove("menu")
         }, 
@@ -64,7 +64,6 @@ export default {
             }
         },
         closeTab(state, val) {
-            console.log('输出', state.currentMenu)
             // 关闭的时候  找到这个数组的下标值  将其删除掉 并且跳转到相应页面
             let result = state.tabsList.findIndex(item => item.name === val.name)
             state.tabsList.splice(result, 1)

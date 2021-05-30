@@ -12,7 +12,7 @@
     <div class="r_con">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
-          <img :src="user_ava" alt="" class="user_ava">
+          <img :src="'/static/img/'+userinfo.avatar+'.png'" alt="" class="user_ava">
         </span>
         <el-dropdown-menu slot="dropdown" size="mini">
           <el-dropdown-item>个人中心</el-dropdown-item>
@@ -29,13 +29,13 @@ export default {
 name: 'commonHeader',
   data(){
     return {
-      user_ava: require("../assets/img/user.png")
     };
   },
 
   computed: {
     ...mapState({
-      current: state => state.tab.currentMenu
+      current: state => state.tab.currentMenu,
+      userinfo: state => JSON.parse(state.user.userinfo)
     })
   },
   created() {},
@@ -47,9 +47,11 @@ name: 'commonHeader',
       this.$store.commit("collapseMenu")
     },
     logout() {
-      this.$store.commit("clearToken");
-      this.$store.commit("clearMenu");
-      location.reload();
+      var func_arr = [ "clearToken", "clearMenu", "clearUserInfo" ]
+      func_arr.forEach(item => {
+        this.$store.commit(item)
+      })
+      location.reload()
     }
   },
 }
