@@ -3,7 +3,7 @@
     <el-col :span="8">
       <el-card shadow="hover" style="height: 290px;">
         <div class="user">
-          <img :src="'/static/img/'+userinfo.avatar+'.png'" />
+          <img :src="userinfo.avatar" />
           <div class="userinfo">
             <p class="name">{{userinfo.username}}</p>
             <p class="access">{{userinfo.identifyname}}</p>

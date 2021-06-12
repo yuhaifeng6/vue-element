@@ -12,7 +12,7 @@
     <div class="r_con">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
-          <img :src="'/static/img/'+userinfo.avatar+'.png'" alt="" class="user_ava">
+          <img :src="userinfo.avatar" alt="" class="user_ava">
         </span>
         <el-dropdown-menu slot="dropdown" size="mini">
           <el-dropdown-item>个人中心</el-dropdown-item>

@@ -18,8 +18,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination class="pager" layout="prev, pager, next" :total="config.total" :current-page.sync="config.page" @current-change="changePage" :page-size="20">
-    </el-pagination>
+    <!-- <el-pagination class="pager" layout="prev, pager, next" :total="config.total" :current-page.sync="config.page" @current-change="changePage" :page-size="20"> -->
+    <!-- </el-pagination> -->
   </div>
 </template>
 

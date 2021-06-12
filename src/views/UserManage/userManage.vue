@@ -33,26 +33,12 @@ name: 'userManage',
       operateType: "add",
       tableLabel: [
         {
-          prop: 'name',
+          prop: 'username',
           label: '姓名'
         },
         {
-          prop: 'age',
-          label: '年龄'
-        },
-        {
-          prop: 'sexLabel',
+          prop: 'sex',
           label: '性别'
-        },
-        {
-          prop: 'birth',
-          label: '出生日期',
-          width: 200
-        },
-        {
-          prop: 'addr',
-          label: '地址',
-          width: 320
         }
       ],
       config: {
@@ -61,20 +47,13 @@ name: 'userManage',
         loading: false
       },
       operateForm: {
-        name: '',
-        addr: '',
-        age: '',
-        birth: '',
+        username: '',
         sex: ''
       },
       operateFormLabel: [
         {
-          model: 'name',
+          model: 'username',
           label: '姓名'
-        },
-        {
-          model: 'age',
-          label: '年龄'
         },
         {
           model: 'sex',
@@ -90,15 +69,6 @@ name: 'userManage',
               value: 0
             }
           ]
-        },
-        {
-          model: 'birth',
-          label: '出生日期',
-          type: 'date'
-        },
-        {
-          model: 'addr',
-          label: '地址'
         }
       ],
       searchFrom: {
@@ -133,20 +103,18 @@ name: 'userManage',
         uid: this.uid
       })
       .then(res => {
-        let data = res.data
-        if (code < 0) {
+        let data = res.data.data
+        if (res.data.code < 0) {
           this.$message({
             message: data.msg,
             type: 'warning'
           })
+          return
         }
-        console.log("返回的数组", res.data.list)
-        // this.tableData = res.data.list.map(item => {
-        //   item.sexLabel = item.sex === 0 ? '女' : '男'
-        //   return item
-        // })
-        // this.config.total = res.data.count
-        // this.config.loading = false
+        this.tableData = data.map(item => {
+          item.sex = item.sex == 0 ? '女' : '男'
+          return item
+        })
       })
     },
     addUser() {
