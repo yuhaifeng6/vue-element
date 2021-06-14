@@ -35,6 +35,11 @@ export default {
                     path: "/",
                     component: () => import(`@/views/vMain`),
                     children: []
+                },
+                {
+                  path: "*",
+                  name: "404",
+                  component: () => import("@/views/404/index")
                 }
             ]
             // 循环添加路由，判断后端返回的路由是否有children路由

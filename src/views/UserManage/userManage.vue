@@ -24,7 +24,7 @@ import commonForm from '../../components/commonForm'
 import commonTable from '../../components/commonTable'
 export default {
 name: 'userManage',
-  data(){
+  data() {
     return {
       uid: JSON.parse(this.$store.state.user.userinfo).uid,
       operateType: 'add',
@@ -142,28 +142,26 @@ name: 'userManage',
         })
       }
     },
+    /** 删除用户 */
     delUser(row) {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          let id = row.id
-          this.$http
-            .get('/api/user/del', {
-              params: {
-                id
-              }
+          let uid = row.uid
+          this.api.postAPI('/api/delUser', {
+            uid: uid
+          })
+          .then(res => {
+            var type = res.data.code == 0 ? 'success' : 'warning'
+            if (res.data.code == 0) this.getList()
+            this.$message({
+              type: type,
+              message: res.data.msg
             })
-            .then(res => {
-              console.log(res.data)
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              })
-              this.getList()
-            })
+          })
         })
         .catch(() => {
           this.$message({
