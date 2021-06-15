@@ -129,14 +129,19 @@ name: 'userManage',
     },
     confirm() {
       if (this.operateType === 'edit') {
-        this.$http.post('/api/user/edit', this.operateForm).then(res => {
-          console.log(res.data)
+        this.operateForm.sex == '女' ? this.operateForm.sex = 0 : this.operateForm.sex = 1
+        this.api.postAPI('/api/editUser', this.operateForm).then(res => {
+          var type = res.data.code == 0 ? 'success' : 'warning'
+          if (res.data.code == 0) this.getList()
+          this.$message({
+            type: type,
+            message: res.data.msg
+          })
           this.isShow = false
-          this.getList()
         })
       } else {
-        this.$http.post('/api/user/add', this.operateForm).then(res => {
-          console.log(res.data)
+        this.api.postAPI('/api/editUser', this.operateForm).then(res => {
+          console.log(222, res.data)
           this.isShow = false
           this.getList()
         })
