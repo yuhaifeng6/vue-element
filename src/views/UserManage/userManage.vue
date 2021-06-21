@@ -129,7 +129,6 @@ name: 'userManage',
     },
     confirm() {
       if (this.operateType === 'edit') {
-        this.operateForm.sex == '女' ? this.operateForm.sex = 0 : this.operateForm.sex = 1
         this.api.postAPI('/api/editUser', this.operateForm).then(res => {
           var type = res.data.code == 0 ? 'success' : 'warning'
           if (res.data.code == 0) this.getList()
